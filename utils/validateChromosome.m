@@ -1,6 +1,6 @@
 function isValid = validateChromosome(chromosome, cValues, vValue)
-    isValid = true;
-    tolerance = 1e-3;
+    isValid   = true;
+    tolerance = 1e-3;  % Tolerance for equation verification
 
     % Check that all values are within the given constraints
     if any(chromosome < 0) || any(chromosome >= cValues)
@@ -44,7 +44,7 @@ function isValid = validateChromosome(chromosome, cValues, vValue)
         return;
     end
 
-    % Check edges 14 and 15(x14 + x15 = x6 + x7 + x13)
+    % Check edges 14 and 15 (x14 + x15 = x6 + x7 + x13)
     if abs(chromosome(14) + chromosome(15) - (chromosome(6) + chromosome(7) + chromosome(13))) > tolerance
         isValid = false;
         return;
@@ -55,4 +55,11 @@ function isValid = validateChromosome(chromosome, cValues, vValue)
         isValid = false;
         return;
     end
+
+    % Check output edge (vValue = out = x17 + x12 + x15 + x16)
+    if abs(chromosome(17) + chromosome(12) + chromosome(15) + chromosome(16) - vValue) > tolerance
+        isValid = false;
+        return;
+    end
+
 end

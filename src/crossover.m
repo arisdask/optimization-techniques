@@ -1,31 +1,34 @@
-function [newPopulation, validCount] = crossover(population, cValues, vValue)
+function [newPopulation, offspringCount] = crossover(population, cValues, vValue)
     numIndividuals = size(population, 1);
+    chromosomeSize = size(population, 2);
     
-    % Ensure the number of individuals is even
-    if mod(numIndividuals, 2) ~= 0
-        error('Population size must be even for crossover pairing.');
-    end
+    % Initialize new population (same size as original)
+    newPopulation = zeros(numIndividuals, chromosomeSize);
+    offspringCount = 0; % Counter for total valid crossovers
 
-    halfPopSize = numIndividuals / 2;
-
-    % Initialize new population (half of original size)
-    newPopulation = zeros(halfPopSize, size(population, 2));
-    validCount = 0; % Counter for valid offspring
-
-    % Loop through pairs and perform crossover
-    for i = 1:halfPopSize
-        parent1 = population(2*i - 1, :); % Parent 1
-        parent2 = population(2*i, :);     % Parent 2
+    % Perform crossover for each new offspring
+    for i = 1:numIndividuals
+        % Select two random parents
+        idx1 = randi(numIndividuals);
+        idx2 = randi(numIndividuals);
+        
+        % Ensure we pick two different parents
+        while idx1 == idx2
+            idx2 = randi(numIndividuals);
+        end
+        
+        parent1 = population(idx1, :);
+        parent2 = population(idx2, :);
 
         % Perform arithmetic crossover (element-wise averaging)
         offspring = (parent1 + parent2) / 2;
 
-        % Check validity, revert if invalid
-        if validateChromosome(offspring, cValues, vValue)
+        % Check validity; 20% chance of not performing crossover
+        if validateChromosome(offspring, cValues, vValue) && rand > 0.2
             newPopulation(i, :) = offspring;
-            validCount = validCount + 1; % Increment valid offspring count
+            offspringCount = offspringCount + 1;
         else
-            % Revert to parent 1 if offspring is invalid
+            % Revert to one of the parents
             newPopulation(i, :) = parent1;
         end
     end

@@ -53,7 +53,7 @@ function chromosome = initializeChromosome(chromosomeSize, cValues, vValue)
     chromosome(9:10) = [gene9, gene10];
 
     % Edges 11, 12, and 13 (from 9, 3, and 8)
-    sum_11to13 = gene9 + genes1to4(3) + gene8;
+    sum_11to13 = gene9 + genes1to4(3) + gene8; % x11 + x12 + x13 = x9 + x3 + x8
 
     while true
         genes11to13 = rand(1, 3);
@@ -68,7 +68,7 @@ function chromosome = initializeChromosome(chromosomeSize, cValues, vValue)
     chromosome(17) = gene17;
 
     % Edges 14, 15 (from 6, 7, and 13)
-    sum_14to15 = gene6 + gene7 + genes11to13(3);
+    sum_14to15 = gene6 + gene7 + genes11to13(3); % x14 + x15 = x6 + x7 + x13
 
     while true
         gene14 = rand * sum_14to15;

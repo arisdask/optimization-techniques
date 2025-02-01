@@ -28,7 +28,8 @@ function fitnessValues = fitnessFunc(population, aValues, cValues)
             totalTime = totalTime + T;
         end
         
-        % Fitness value (lower time is better)
-        fitnessValues(i) = 1 / totalTime;
+        % Fitness score (lower time is better)
+        fitnessValues(i) = 1 / (totalTime - 700)^5;
+        % fitnessValues(i) = 1 / log10(totalTime + 1);
     end
 end
