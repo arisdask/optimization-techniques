@@ -1,4 +1,4 @@
-function population = initializePopulation(popSize, chromosomeSize, cValues, vValue)
+function population = initializePopulationConstV(popSize, chromosomeSize, cValues, vValue)
     population = zeros(popSize, chromosomeSize);
 
     for i = 1:1:popSize

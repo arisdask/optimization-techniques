@@ -1,4 +1,4 @@
-function fitnessValues = fitnessFunc(population, aValues, cValues)
+function fitnessValues = fitnessFunc(population, aValues, cValues, fitnessScoreFunc)
     % Number of individuals in the population
     popSize  = size(population, 1);
     numEdges = length(cValues);
@@ -28,8 +28,7 @@ function fitnessValues = fitnessFunc(population, aValues, cValues)
             totalTime = totalTime + T;
         end
         
-        % Fitness score (lower time is better)
-        fitnessValues(i) = 1 / (totalTime - 700)^5;
-        % fitnessValues(i) = 1 / log10(totalTime + 1);
+        % Use the provided fitness score function (lower time is better)
+        fitnessValues(i) = fitnessScoreFunc(totalTime);
     end
 end

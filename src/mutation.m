@@ -2,18 +2,32 @@ function [mutatedPopulation, validMutations] = mutation(population, cValues, vVa
     mutationRate = 0.25;  % Probability of mutating a chromosome
     sigma = 0.5;          % Standard deviation for small mutations
     numIndividuals = size(population, 1);
+    chromosomeSize = size(population, 2);
     
     mutatedPopulation = population;  % Copy original population
     validMutations = 0;  % Counter for valid mutations
-
-    for i = 1:numIndividuals
+    
+    for i = 1:1:numIndividuals
         if rand < mutationRate
             chromosome = population(i, :);  % Select chromosome to mutate
+
+            % If chromosomeSize = 18, then we should mutate the V = chromosome(chromosomeSize)
+            if chromosomeSize == 18
+                while true
+                    V = chromosome(chromosomeSize) + normrnd(0, sigma);
+                    if V >= 85 && V <= 115
+                        chromosome(chromosomeSize) = V;
+                        break;
+                    end
+                end
+            else
+                V = vValue;
+            end
             
             % Mutate edges 1-4 with small Gaussian noise
             while true
                 genes1to4 = chromosome(1:4) + normrnd(0, sigma, 1, 4);
-                genes1to4 = (genes1to4 / sum(genes1to4)) * vValue;
+                genes1to4 = (genes1to4 / sum(genes1to4)) * V;
                 if all(genes1to4 < cValues(1:4)) && all(genes1to4 >= 0)
                     break;
                 end
@@ -81,7 +95,7 @@ function [mutatedPopulation, validMutations] = mutation(population, cValues, vVa
             chromosome(14:16) = [gene14, gene15, gene16];
 
             % Validate and store mutation
-            if validateChromosome(chromosome, cValues, vValue)
+            if validateChromosome(chromosome(1:17), cValues, V)
                 mutatedPopulation(i, :) = chromosome;
                 validMutations = validMutations + 1;
             end
