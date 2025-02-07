@@ -17,7 +17,7 @@ options = optimoptions('fmincon', 'Algorithm', 'sqp', 'Display', 'iter');
 [x_opt, fval] = fmincon(@(x) totalTravelTime(x, a, c), x0, [], [], [], [], lb, ub, @flowConstraints, options);
 
 fprintf('Optimal Traffic Flow:\n');
-disp(x_opt);
+disp(x_opt');
 fprintf('Minimum Total Travel Time: %f min\n', fval);
 
 

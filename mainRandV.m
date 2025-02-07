@@ -11,17 +11,20 @@ chromosomeSize = 18;  % From x1 to x17 including V
 
 alpha = 0.05;  % Parameter: controls sensitivity of fitness function over T
 
-% Exponential fitness function: higher fitness for lower T
-fitnessScoreFunc = @(totalTime) exp(-alpha * (totalTime));
-
+% Fitness function: higher fitness for lower T
 % Inverse fitness function: recovers totalTime from fitness
+
+fitnessScoreFunc        = @(totalTime) exp(-alpha * (totalTime));
 inverseFitnessScoreFunc = @(fitnessScore) - log(fitnessScore)/alpha;
+
+% fitnessScoreFunc        = @(totalTime) 1 / (totalTime - 500)^6;
+% inverseFitnessScoreFunc = @(fitnessScore) 1 / fitnessScore^(1/6) + 500;
 
 %% Initialize Population
 % Parameters
-maxGenerations = 5000;  % Maximum number of generations
-tolerance      = 1e-0;  % Stopping criterion tolerance
-n              = 200;   % Stability Window: Number of generations to check for convergence stability
+maxGenerations = 1200;  % Maximum number of generations
+tolerance      = 0.4;  % Stopping criterion tolerance
+n              = 50;   % Stability Window: Number of generations to check for convergence stability
 printLogs      = true;  % Enable debug logging output to console
 
 % Initialize Population

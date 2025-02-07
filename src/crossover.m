@@ -13,7 +13,7 @@ function [newPopulation, offspringCount] = crossover(population, cValues, vValue
         idx2 = randi(numIndividuals);
 
         while chromosomeSize == 18 && (idx1 == idx2 || ...
-             abs(population(idx1, chromosomeSize) - population(idx2, chromosomeSize)) > 0.2)
+             abs(population(idx1, chromosomeSize) - population(idx2, chromosomeSize)) > 1.5)
             idx1 = randi(numIndividuals);
             idx2 = randi(numIndividuals);
         end

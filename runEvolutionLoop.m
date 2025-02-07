@@ -21,46 +21,40 @@ function [population, bestFitness, bestSolution, generation, bestFitnessScores, 
         population = population(rouletteIndices, :);
         if printLogs
             numUnique = length(unique(rouletteIndices));
-            fprintf('[selection]  Number of total unique indices:  %d/%d\n', ...
+            fprintf('[selection]  Number of total unique indices:   %d/%d\n', ...
                 numUnique, numOfSelections);
         end
 
         % Crossover
         [population, offspringCount] = crossover(population, cValues, vValue);
         if printLogs
-            fprintf('[crossover]  Number of total new offsprings:  %d/%d\n', ...
+            fprintf('[crossover]  Number of total valid crossovers: %d/%d\n', ...
                 offspringCount, numOfSelections);
         end
 
         % Mutation
         [population, validMutations] = mutation(population, cValues, vValue);
         if printLogs
-            fprintf('[mutation]   Number of total valid mutations: %d/%d\n', ...
+            fprintf('[mutation]   Number of total valid mutations:  %d/%d\n', ...
                 validMutations, numOfSelections);
 
             numUniqueChromosomes = size(unique(population, 'rows'), 1);
-            fprintf('[population] Number of unique chromosomes:    %d/%d\n', ...
+            fprintf('[population] Number of unique chromosomes:     %d/%d\n', ...
                 numUniqueChromosomes, numOfSelections);
         end
 
         % Evaluate Fitness Scores
         fitnessValues = fitnessFunc(population, aValues, cValues, fitnessScoreFunc);
         [bestFitness, bestIndex] = max(fitnessValues);
-    
-        % Check stopping criterion
-        % if generation > n && ...
-        %         abs( ...
-        %         inverseFitnessScoreFunc(bestFitness) - inverseFitnessScoreFunc(mean(prevBestFitnessScores((generation - n):(generation - 1)))) ...
-        %         ) <= tolerance
-        %     break;
-        % end
+
+        bestFitnessScores(generation) = bestFitness;
+        meanFitnessScores(generation) = mean(fitnessValues);
+
         if generation > n && std( ...
-                arrayfun(inverseFitnessScoreFunc, bestFitnessScores((generation - n):(generation - 1))) ...
+                arrayfun(inverseFitnessScoreFunc, bestFitnessScores((generation - n):(generation))) ...
                 ) <= tolerance
             break;
         end
-        bestFitnessScores(generation) = bestFitness;
-        meanFitnessScores(generation) = mean(fitnessValues);
     end
 
     % Final Outputs
