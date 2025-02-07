@@ -7,22 +7,22 @@ clear; clc; close all;
 addpath('src'); addpath('utils'); addpath('lib');
 
 % Parameter Initialization
-V_values = linspace(85, 115, 50);  % Vector of V values
+V_values = linspace(85, 115, 20);  % Vector of V values
 [~, a, c, populationSize, numOfSelections] = initializeProblemValues;
 chromosomeSize = 17;  % From x1 to x17
 
 alpha = 0.05;  % Parameter: controls sensitivity of fitness function over T
 
-% Exponential fitness function: higher fitness for lower T
-fitnessScoreFunc = @(totalTime) exp(-alpha * (totalTime));
-
+% Fitness function: higher fitness for lower T
 % Inverse fitness function: recovers totalTime from fitness
+
+fitnessScoreFunc        = @(totalTime) exp(-alpha * (totalTime));
 inverseFitnessScoreFunc = @(fitnessScore) - log(fitnessScore)/alpha;
 
-% Parameters
-maxGenerations = 5000;   % Maximum number of generations
+%% Parameters
+maxGenerations = 1200;   % Maximum number of generations
 tolerance      = 1e-1;   % Stopping criterion tolerance
-n              = 200;    % Stability Window: Number of generations to check for convergence stability
+n              = 20;    % Stability Window: Number of generations to check for convergence stability
 printLogs      = false;  % Disable logging for multiple runs
 
 bestTimeOverall       = Inf;

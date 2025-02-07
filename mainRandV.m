@@ -4,7 +4,7 @@
 
 %% Clean workplace - Initialize Problem
 clear; clc; close all;
-addpath('src'); addpath('utils');
+addpath('src'); addpath('utils'); addpath('lib');
 
 [vInitial, a, c, populationSize, numOfSelections] = initializeProblemValues;
 chromosomeSize = 18;  % From x1 to x17 including V
