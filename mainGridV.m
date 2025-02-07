@@ -1,6 +1,5 @@
 % Optimization Techniques - Project - mainGridV
 % Author: Aristeidis Daskalopoulos (AEM: 10640)
-% info: ...
 
 %% Clean workplace - Initialize Problem
 clear; clc; close all;

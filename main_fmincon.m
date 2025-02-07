@@ -1,6 +1,5 @@
 % Optimization Techniques - Project - main_fmincon
 % Author: Aristeidis Daskalopoulos (AEM: 10640)
-% info: ...
 
 clear; clc; close all;
 
